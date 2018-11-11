@@ -1,0 +1,11 @@
+{
+  "name": "weatherapp",
+  "version": "1.0.0",
+  "description": "displays current weather",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ankur Charan",
+  "license": "ISC"
+}
