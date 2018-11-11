@@ -16,5 +16,13 @@
 			</form>
 		</fieldset>
 	</div>
+
+	<div>
+		{{#if error}}
+			<p>{{error}}</p>
+		{{else}}
+			<p>{{weather}}</p>
+		{{/if}}
+	</div>
 </body>
 </html>

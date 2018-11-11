@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const request = require('request');
+
 const app = express();
 
 const apiKey = '3e2cf5d377d212d9d1bdf5109a88b672';
@@ -22,7 +24,7 @@ app.post('/', function (req, res) {
 		if(error) {
 			res.render('index', {
 				weather: null,
-				error: 'Error, please try again'
+				error: `Error finding temperature for ${city}. Please try again!`
 			});
 		}
 		else {
@@ -31,11 +33,11 @@ app.post('/', function (req, res) {
 			if(weather.main === undefined) {
 				res.render('index', {
 					weather: null,
-					error: 'Error, please try again'	
+					error: `Error finding temperature for ${city}. Please try again!`
 				})
 			}
 			else {
-				let weatherText = `It's ${weather.main.temp} degrees in ${weather.name}`;
+				let weatherText = `It's ${weather.main.temp} degree Fahreheit in ${weather.name}`;
 
 				res.render('index', {
 					weather: weatherText,
@@ -46,7 +48,6 @@ app.post('/', function (req, res) {
 	})
 })
 
-
 app.listen(5000, function() {
-	console.log("http://localhost:5000");
+	console.log("Visit http://localhost:5000 to search for weather in places!");
 })
