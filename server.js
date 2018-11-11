@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
+const apiKey = '3e2cf5d377d212d9d1bdf5109a88b672';
 
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
@@ -13,8 +14,36 @@ app.get('/', function (req, res) {
 })
 
 app.post('/', function (req, res) {
-	console.log(req.body.city);
-	res.render('index');
+	
+	let city = req.body.city;
+	let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
+	
+	request(url, function (error, response, body) {
+		if(error) {
+			res.render('index', {
+				weather: null,
+				error: 'Error, please try again'
+			});
+		}
+		else {
+			let weather = JSON.parse(body);
+
+			if(weather.main === undefined) {
+				res.render('index', {
+					weather: null,
+					error: 'Error, please try again'	
+				})
+			}
+			else {
+				let weatherText = `It's ${weather.main.temp} degrees in ${weather.name}`;
+
+				res.render('index', {
+					weather: weatherText,
+					error: null
+				})
+			}
+		}
+	})
 })
 
 
